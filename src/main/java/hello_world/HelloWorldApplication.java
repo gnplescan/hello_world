@@ -23,16 +23,10 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration> 
     }
 
     @Override
-    public void run(final HelloWorldConfiguration configuration,
-                    final Environment environment) {
-        final HelloWorldResource resource = new HelloWorldResource(
-                configuration.getTemplate(),
-                configuration.getDefaultName()
-        );
-        final TemplateHealthCheck healthCheck =
-                new TemplateHealthCheck(configuration.getTemplate());
-        environment.healthChecks().register("template", healthCheck);
+    public void run(final HelloWorldConfiguration configuration, final Environment environment) {
+        final HelloWorldResource resource = new HelloWorldResource(configuration.getTemplate(), configuration.getDefaultName());
         environment.jersey().register(resource);
+        final TemplateHealthCheck healthCheck = new TemplateHealthCheck(configuration.getTemplate());
+        environment.healthChecks().register("template", healthCheck);
     }
-
 }
